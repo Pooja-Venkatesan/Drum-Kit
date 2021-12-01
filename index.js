@@ -1,9 +1,15 @@
 var numberOfDrumButtons = document.querySelectorAll(".drum").length;
 
+// for loop starts
 for(i=0;i<numberOfDrumButtons; i++) {
-    document.querySelectorAll(".drum")[i].addEventListener("click", handleClick);
+  
+  document.querySelectorAll(".drum")[i].addEventListener("click", handleClick);
 
-function handleClick(){
+  document.addEventListener("keypress", handlePress);
+
+
+  // for mouse-click
+  function handleClick(){
     
     var buttonInnerHTML=this.innerHTML;
     
@@ -13,16 +19,17 @@ function handleClick(){
     
 }
 
+// for keypress
+function handlePress(event) {
 
-document.addEventListener("keypress", function(event) {
+  makeSound(event.key);
 
-    makeSound(event.key);
-  
-    buttonAnimation(event.key);
-  
-  });
-  
-  
+  buttonAnimation(event.key);
+
+}
+
+
+  //function makeSound(key) starts
   function makeSound(key) {
   
     switch (key) {
@@ -61,9 +68,27 @@ document.addEventListener("keypress", function(event) {
         kick.play();
         break;
   
-  
       default: console.log(key);
   
     }
   }
+  // makeSound(key) ends
+
+  // function buttonAnimation(currentKey) starts
+
+  function buttonAnimation(currentKey){
+
+    var activeButton = document.querySelector("."+currentKey);
+    activeButton.classList.add("pressed");
+
+    // to remove the class "pressed" after a specified time, we use setTimeout( fn() , millisecond );
+
+    setTimeout(function(){
+      activeButton.classList.remove("pressed")
+    }, 200);
+
+  }
+  // function buttonAnimation(currentKey) ends
+
 }
+// for loop ends
